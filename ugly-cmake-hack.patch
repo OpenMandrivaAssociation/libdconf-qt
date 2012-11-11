@@ -1,0 +1,42 @@
+diff -urN libdconf-qt-0.0.0.old/lib/CMakeLists.txt libdconf-qt-0.0.0/lib/CMakeLists.txt
+--- libdconf-qt-0.0.0.old/lib/CMakeLists.txt	2011-10-16 01:04:51.923913645 +0100
++++ libdconf-qt-0.0.0/lib/CMakeLists.txt	2011-10-16 01:03:25.736991128 +0100
+@@ -31,10 +31,11 @@
+     ${DCONF_DBUS_LIBRARIES}
+     )
+ 
++set(libdir CACHE PATH "libdir")
+ set(INCLUDE_INSTALL_DIR include/${LIB_NAME})
+ 
+ install(TARGETS ${LIB_NAME}
+-    LIBRARY DESTINATION lib${LIB_SUFFIX})
++    LIBRARY DESTINATION ${libdir})
+ 
+ install(FILES qconf.h
+     DESTINATION ${INCLUDE_INSTALL_DIR}
+@@ -45,10 +46,10 @@
+ #
+ set (PREFIXDIR "${CMAKE_INSTALL_PREFIX}")
+ set (EXEC_PREFIX "${CMAKE_INSTALL_PREFIX}")
+-set (LIBDIR "${CMAKE_INSTALL_PREFIX}/lib")
++set (LIBDIR "${CMAKE_INSTALL_PREFIX}/${libdir}")
+ set (INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include")
+ 
+ configure_file (${LIB_NAME}.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/${LIB_NAME}.pc)
+ install (FILES ${CMAKE_CURRENT_BINARY_DIR}/${LIB_NAME}.pc DESTINATION
+-         ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig)
++         ${libdir}/pkgconfig)
+ 
+diff -urN libdconf-qt-0.0.0.old/qml/CMakeLists.txt libdconf-qt-0.0.0/qml/CMakeLists.txt
+--- libdconf-qt-0.0.0.old/qml/CMakeLists.txt	2011-07-22 16:35:06.000000000 +0100
++++ libdconf-qt-0.0.0/qml/CMakeLists.txt	2011-10-16 01:04:22.500281490 +0100
+@@ -24,7 +24,8 @@
+     )
+ 
+ # Install
+-set(IMPORT_INSTALL_DIR lib/qt4/imports/QConf)
++set(libdir CACHE PATH "libdir")
++set(IMPORT_INSTALL_DIR ${libdir}/qt4/plugins/imports/QConf)
+ 
+ install(TARGETS dconf-qml
+     LIBRARY DESTINATION ${IMPORT_INSTALL_DIR}
