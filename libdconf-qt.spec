@@ -67,3 +67,21 @@ export BUILD_GLOBAL=true
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 
+
+
+%changelog
+* Tue Jan 24 2012 Matthew Dawkins <mattydaw@mandriva.org> 0.0.0-0.110722.1
++ Revision: 767453
+- imported package libdconf-qt
+
+
+* Sun Oct 16 2011 nmarques@opensuse.org
+- Fix licenses
+* Sun Oct 16 2011 nmarques@opensuse.org
+- Initial package taken from Ubuntu Oneiric release, no official
+  release.
+- 01_fix_pc_generation.patch: fix .pc generation, taken from
+  Ubuntu release.
+- 02_link_again_dconf_dbus.patch: link again to dconf dbus, taken
+  from Ubuntu release.
+- ugly-cmake-hack.patch: force libdir.
