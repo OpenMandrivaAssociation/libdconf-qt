@@ -19,7 +19,7 @@ diff -urN libdconf-qt-0.0.0.old/lib/CMakeLists.txt libdconf-qt-0.0.0/lib/CMakeLi
  set (PREFIXDIR "${CMAKE_INSTALL_PREFIX}")
  set (EXEC_PREFIX "${CMAKE_INSTALL_PREFIX}")
 -set (LIBDIR "${CMAKE_INSTALL_PREFIX}/lib")
-+set (LIBDIR "${CMAKE_INSTALL_PREFIX}/${libdir}")
++set (LIBDIR "${libdir}")
  set (INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include")
  
  configure_file (${LIB_NAME}.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/${LIB_NAME}.pc)

@@ -1,24 +1,23 @@
 %define major 0
 %define libname %mklibname dconf-qt %{major}
-%define develname %mklibname dconf-qt -d
+%define devname %mklibname dconf-qt -d
 
 %define gitver 110722
 
 Summary:	QML plugin and Qt bindings for dconf
 Name:		libdconf-qt
 Version:	0.0.0
-Release:	0.%{gitver}.1
-License:	GPLv3,LGPLv3
-Url:		http://launchat.net/dconf-qt
+Release:	0.%{gitver}.2
+License:	LGPLv3+
 Group:		System/Libraries
+Url:		http://launchat.net/dconf-qt
 Source0:	%{name}-%{version}.%{gitver}.tar.bz2
 # PATCH-FIX-UPSTREAM 01_fix_pc_generation.patch - fix .pc generation, taken from Ubuntu release
-Patch0: 01_fix_pc_generation.patch
+Patch0:		01_fix_pc_generation.patch
 # PATCH-FIX-UPSTREAM 02_link_again_dconf_dbus.patch - link again dconf dbus, taken from Ubuntu
-Patch1: 02_link_again_dconf_dbus.patch
+Patch1:		02_link_again_dconf_dbus.patch
 # PATCH-FEATURE-OPENSUSE ugly-cmake-hack.patch - cmake carnage to 'use' libdir
-Patch2: ugly-cmake-hack.patch
-
+Patch2:		ugly-cmake-hack.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(QtCore)
 BuildRequires:	pkgconfig(QtDeclarative)
@@ -28,20 +27,39 @@ BuildRequires:	pkgconfig(glib-2.0)
 %description
 Qt bindings and QML plugin for dconf.
 
+%files
+%{_qt_importdir}/QConf
+
+#----------------------------------------------------------------------------
+
 %package -n %{libname}
 Summary:	QML plugin and Qt bindings for dconf
 Group:		System/Libraries
+Suggests:	%{name}
 
 %description -n %{libname}
 Qt bindings and QML plugin for dconf - system shared libraries.
 
-%package -n %{develname}
+%files -n %{libname}
+%doc COPYING-GPL3 COPYING-LGPL3
+%{_libdir}/libdconf-qt.so.%{major}*
+
+#----------------------------------------------------------------------------
+
+%package -n %{devname}
 Summary:	QML plugin and Qt bindings for dconf
 Group:		Development/C++
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
 
-%description -n %{develname}
+%description -n %{devname}
 Qt bindings and QML plugin for dconf - development files.
+
+%files -n %{devname}
+%{_includedir}/dconf-qt/
+%{_libdir}/libdconf-qt.so
+%{_libdir}/pkgconfig/*.pc
+
+#----------------------------------------------------------------------------
 
 %prep
 %setup -q
@@ -57,31 +75,6 @@ export BUILD_GLOBAL=true
 %install
 %makeinstall_std -C build
 
-%files -n %{libname}
-%doc COPYING-GPL3 COPYING-LGPL3
-%{_libdir}/*.so.%{major}*
-%{_libdir}/qt4/plugins/imports/
+mkdir -p %{buildroot}%{_qt_importdir}
+mv %{buildroot}%{_libdir}/qt4/plugins/imports/* %{buildroot}%{_qt_importdir}/
 
-%files -n %{develname}
-%{_includedir}/dconf-qt/
-%{_libdir}/*.so
-%{_libdir}/pkgconfig/*.pc
-
-
-
-%changelog
-* Tue Jan 24 2012 Matthew Dawkins <mattydaw@mandriva.org> 0.0.0-0.110722.1
-+ Revision: 767453
-- imported package libdconf-qt
-
-
-* Sun Oct 16 2011 nmarques@opensuse.org
-- Fix licenses
-* Sun Oct 16 2011 nmarques@opensuse.org
-- Initial package taken from Ubuntu Oneiric release, no official
-  release.
-- 01_fix_pc_generation.patch: fix .pc generation, taken from
-  Ubuntu release.
-- 02_link_again_dconf_dbus.patch: link again to dconf dbus, taken
-  from Ubuntu release.
-- ugly-cmake-hack.patch: force libdir.
