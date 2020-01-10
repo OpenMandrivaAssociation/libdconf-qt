@@ -63,7 +63,7 @@ Qt bindings and QML plugin for dconf - development files.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 export BUILD_GLOBAL=true
