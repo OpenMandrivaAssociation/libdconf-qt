@@ -10,7 +10,7 @@ Version:	0.0.0
 Release:	0.%{gitver}.2
 License:	LGPLv3+
 Group:		System/Libraries
-Url:		http://launchat.net/dconf-qt
+Url:		https://launchat.net/dconf-qt
 Source0:	%{name}-%{version}.%{gitver}.tar.bz2
 # PATCH-FIX-UPSTREAM 01_fix_pc_generation.patch - fix .pc generation, taken from Ubuntu release
 Patch0:		01_fix_pc_generation.patch
